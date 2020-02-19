@@ -1,4 +1,7 @@
 # Surface Tension
+Created by Holmium67
+
+## Description
 When the nuclear warhead in the site is detonated and not everyone is dead yet, this plugin will wait a given amout of time and then start ticking their health down until they die. All times are configurable and damage is configurable. Damage can either be by number or percent.
 
 ## Config Settings
