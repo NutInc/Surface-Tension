@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
-using EXILED;
-using EXILED.Extensions;
-using EXILED.Patches;
 using MEC;
 
 namespace Surface_Tension
 { 
     public class EventHandlers
     {
-        private readonly SurfaceTension plugin; 
-        public EventHandlers(SurfaceTension plugin) => this.plugin = plugin;
+        private readonly SurfaceTension plugin;
+        public EventHandlers(SurfaceTension plugin)
+        {
+            this.plugin = plugin;
+        }
+
         public List<CoroutineHandle> Coroutines = new List<CoroutineHandle>();
 
         public void OnRoundStart()
@@ -18,12 +19,9 @@ namespace Surface_Tension
                 Timing.KillCoroutines(handle);
         }
         
-        public void OnWarheadDetonation()
-        {
-            Coroutines.Add(Timing.RunCoroutine(plugin.RaiseTheTension()));
-        }
+        public void OnWarheadDetonation() => Coroutines.Add(Timing.RunCoroutine(plugin.Methods.RaiseTheTension()));
 
-        public void OnRoundEnd()
+            public void OnRoundEnd()
         {
             foreach (CoroutineHandle handle in Coroutines)
                 Timing.KillCoroutines(handle);
