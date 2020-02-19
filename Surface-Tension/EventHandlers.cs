@@ -8,7 +8,7 @@ namespace Surface_Tension
 { 
     public class EventHandlers
     {
-        public SurfaceTension plugin; 
+        private readonly SurfaceTension plugin; 
         public EventHandlers(SurfaceTension plugin) => this.plugin = plugin;
         public List<CoroutineHandle> Coroutines = new List<CoroutineHandle>();
 
@@ -27,7 +27,6 @@ namespace Surface_Tension
         {
             foreach (CoroutineHandle handle in Coroutines)
                 Timing.KillCoroutines(handle);
-            //foreach (ReferenceHub hub in Player.GetHubs())
         }
     }
 }

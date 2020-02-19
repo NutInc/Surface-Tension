@@ -8,7 +8,7 @@ namespace Surface_Tension
 {
     public class SurfaceTension : EXILED.Plugin
     {
-        public EventHandlers EventHandlers;
+        public EventHandlers EventHandlers { get; private set; }
 
         public bool DoDelay;
         public bool IsPercentage;
@@ -20,14 +20,11 @@ namespace Surface_Tension
         {
             try
             {
-                Log.Info("loaded.");
                 ReloadConfig();
-                Log.Info("Configs loaded.");
+                Log.Info("Surface Tension Configs loaded.");
                 
-                Log.Debug("Initializing event handlers..");
-                //Set instance variable to a new instance, this should be nulled again in OnDisable
                 EventHandlers = new EventHandlers(this);
-                //Hook the events you will be using in the plugin. You should hook all events you will be using here, all events should be unhooked in OnDisabled 
+                
                 Events.RoundStartEvent += EventHandlers.OnRoundStart;
                 Events.RoundEndEvent += EventHandlers.OnRoundEnd;
                 Events.WarheadDetonationEvent += EventHandlers.OnWarheadDetonation;
@@ -52,12 +49,12 @@ namespace Surface_Tension
 
         public override void OnReload()
         {
-            //This is only fired when you use the EXILED reload command, the reload command will call OnDisable, OnReload, reload the plugin, then OnEnable in that order. There is no GAC bypass, so if you are updating a plugin, it must have a unique assembly name, and you need to remove the old version from the plugins folder
+            
         }
 
         public override string getName { get; } = "Surface Tension";
-        
-        public void ReloadConfig()
+
+        private void ReloadConfig()
         {
             Log.Info($"Config Path: {Config.Path}");
             DoDelay = Config.GetBool("st_enable_delay", true);
