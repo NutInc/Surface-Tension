@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EXILED;
 using MEC;
 
 namespace Surface_Tension
@@ -18,8 +19,13 @@ namespace Surface_Tension
             foreach (CoroutineHandle handle in Coroutines)
                 Timing.KillCoroutines(handle);
         }
-        
-        public void OnWarheadDetonation() => Coroutines.Add(Timing.RunCoroutine(plugin.Methods.RaiseTheTension()));
+
+        public void OnWarheadDetonation()
+        {
+            Log.Info("Warhead has been detonated.");
+            Coroutines.Add(Timing.RunCoroutine(plugin.Methods.RaiseTheTension()));
+            Log.Info("Tension Raised.");
+        } 
 
             public void OnRoundEnd()
         {

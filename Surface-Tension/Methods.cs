@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EXILED;
 using EXILED.Extensions;
 using MEC;
 
@@ -18,13 +19,19 @@ namespace Surface_Tension
         
         public IEnumerator<float> RaiseTheTension()
         {
-            if (plugin.DoDelay)
-                yield return Timing.WaitForSeconds(plugin.DelayTime);
+            Log.Info("Raising the tension");
 
+            if (plugin.DoDelay)
+            {
+                yield return Timing.WaitForSeconds(plugin.DelayTime);
+            }
+            
+            Log.Info("Delay finished, starting to damage players.");
+            
             for (;;)
             {
                 yield return Timing.WaitForSeconds(plugin.TimeBetweenDamage);
-                
+
                 foreach (ReferenceHub hub in Player.GetHubs())
                 {
                     if (hub.characterClassManager.CurClass == RoleType.Spectator) 
@@ -32,7 +39,7 @@ namespace Surface_Tension
                     
                     int maxHp = hub.playerStats.maxHP;
                     var postNukeDamage = DamageCalculation(plugin.IsPercentage, maxHp, plugin.Damage);
-                        
+                    
                     hub.playerStats.HurtPlayer(new PlayerStats.HitInfo(postNukeDamage, "POST-DETONATION-DAMAGE", DamageTypes.Wall, 0), hub.gameObject);
                 }
             }

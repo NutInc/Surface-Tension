@@ -6,7 +6,7 @@ using MEC;
 
 namespace Surface_Tension
 {
-    public class SurfaceTension : EXILED.Plugin
+    public class SurfaceTension : Plugin
     {
         public EventHandlers EventHandlers { get; private set; }
         public Methods Methods { get; private set; }
@@ -27,19 +27,23 @@ namespace Surface_Tension
                     return;
                 
             EventHandlers = new EventHandlers(this);
+            Log.Info("Initialized EventHandlers");
             Methods = new Methods(this);
-                
+            Log.Info("Initialized Methods");
+
             Events.RoundStartEvent += EventHandlers.OnRoundStart;
             Events.RoundEndEvent += EventHandlers.OnRoundEnd;
             Events.WarheadDetonationEvent += EventHandlers.OnWarheadDetonation;
+            Log.Info("EventHandlers have loaded.");
             Log.Info($"Surface Tension has loaded.");
         }
-
         public override void OnDisable()
         {
             foreach (CoroutineHandle handle in EventHandlers.Coroutines)
+            {
                 Timing.KillCoroutines(handle);
-            
+            }
+
             Events.RoundStartEvent -= EventHandlers.OnRoundStart;
             Events.RoundEndEvent -= EventHandlers.OnRoundEnd;
             Events.WarheadDetonationEvent -= EventHandlers.OnWarheadDetonation;
@@ -57,12 +61,13 @@ namespace Surface_Tension
         private void ReloadConfig()
         {
             Log.Info($"Config Path: {Config.Path}");
-            Enabled = Config.GetBool("st_enable, true");
+            Enabled = Config.GetBool("st_enable", true);
             DoDelay = Config.GetBool("st_enable_delay", true);
             IsPercentage = Config.GetBool("st_is_damage_type_percent", true);
             Damage = Config.GetInt("st_damage", 1);
             DelayTime = Config.GetFloat("st_delay_time", 90f);
             TimeBetweenDamage = Config.GetFloat("st_time_between_dmg", 1f);
+            Log.Info("Configs Reloaded");
         }
     }
 }
