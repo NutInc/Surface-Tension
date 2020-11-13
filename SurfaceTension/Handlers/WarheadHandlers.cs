@@ -29,6 +29,8 @@ namespace SurfaceTension.Handlers
 
                     ply.Health -= DamageCalculation(Instance.Config.DamageAsPercentage, ply.MaxHealth,
                         Instance.Config.DamageAmount);
+                    if (ply.Health <= 0)
+                        ply.Kill(DamageTypes.Decont);
                 }
             }
         }
