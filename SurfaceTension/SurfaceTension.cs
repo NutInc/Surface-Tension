@@ -12,14 +12,12 @@
         {
             _eventHandlers = new EventHandlers(Config);
 
-            ServerHandlers.RoundEnded += _eventHandlers.OnRoundEnded;
             WarheadHandlers.Detonated += _eventHandlers.OnWarheadDetonation;
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            ServerHandlers.RoundEnded -= _eventHandlers.OnRoundEnded;
             WarheadHandlers.Detonated -= _eventHandlers.OnWarheadDetonation;
             base.OnDisabled();
         }

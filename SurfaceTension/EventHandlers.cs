@@ -9,16 +9,10 @@ namespace SurfaceTension
     {
         public EventHandlers(Config config) => _config = config;
         private readonly Config _config;
-        private CoroutineHandle _coroutineHandle;
-
-        public void OnRoundEnded(RoundEndedEventArgs _)
-        {
-            Timing.KillCoroutines(_coroutineHandle);
-        }
 
         public void OnWarheadDetonation()
         {
-            _coroutineHandle = Timing.RunCoroutine(DamageOverTime());
+            Timing.RunCoroutine(DamageOverTime());
         }
 
         private IEnumerator<float> DamageOverTime()
@@ -26,7 +20,7 @@ namespace SurfaceTension
             if (_config.DelayTime > 0)
                 yield return Timing.WaitForSeconds(_config.DelayTime);
 
-            while (Round.IsStarted)
+            while (Warhead.IsDetonated)
             {
                 yield return Timing.WaitForSeconds(_config.DamageInterval > 0 ? _config.DamageInterval : 0.1f);
                 foreach (Player ply in Player.List)
