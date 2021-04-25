@@ -10,18 +10,19 @@ namespace SurfaceTension
         public EventHandlers(Config config) => _config = config;
         private readonly Config _config;
 
-        public void OnWarheadDetonation()
+        private float DamageCalculation(bool isPercent, int playerMaxHp, int damage)
         {
-            Timing.RunCoroutine(DamageOverTime());
+            return isPercent ? playerMaxHp / 100 * damage : damage;
         }
 
         private IEnumerator<float> DamageOverTime()
         {
             if (_config.DelayTime > 0)
                 yield return Timing.WaitForSeconds(_config.DelayTime);
+                
 
             while (Warhead.IsDetonated)
-            {
+            { 
                 yield return Timing.WaitForSeconds(_config.DamageInterval > 0 ? _config.DamageInterval : 0.1f);
                 foreach (Player ply in Player.List)
                 {
@@ -29,13 +30,16 @@ namespace SurfaceTension
                         continue;
 
                     ply.Hurt(DamageCalculation(_config.DamageAsPercentage, ply.MaxHealth, _config.DamageAmount));
+                    ply.ShowHint(duration: _config.DamageInterval, message: $"{_config.DamageMessage}");
                 }
             }
         }
 
-        private float DamageCalculation(bool isPercent, int playerMaxHp, int damage)
+        public void OnWarheadDetonation()
         {
-            return isPercent ? playerMaxHp / 100 * damage : damage;
+            Timing.RunCoroutine(DamageOverTime());
+            Log.Info($"Warhead detonated. Surface Tension starting in {_config.DelayTime} seconds!");
         }
+
     }
 }
