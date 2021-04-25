@@ -19,8 +19,26 @@ namespace SurfaceTension
         {
             if (_config.DelayTime > 0)
                 yield return Timing.WaitForSeconds(_config.DelayTime);
-                
 
+                //Cassie warning
+                if (_config.EnableCassie == true)
+            {
+                Cassie.Message(_config.CassieMessage);
+            }
+
+                //Warning broadcast
+                if (_config.EnableBroadcast == true)
+            {
+                Map.Broadcast(duration: _config.BroadcastDuration, message: _config.BroadcastMessage);
+            }
+                //Console logs for tension
+                if (_config.ConsoleLogs == true)
+            {
+                if (_config.DamageAsPercentage == true) { Log.Info($"Surface Tension has started! Now damaging players for {_config.DamageAmount}% of their health every {_config.DamageInterval} second(s)."); }
+                else { Log.Info($"Surface Tension has started! Now damaging players for {_config.DamageAmount} HP every {_config.DamageInterval} second(s)."); }
+                
+            }
+                
             while (Warhead.IsDetonated)
             { 
                 yield return Timing.WaitForSeconds(_config.DamageInterval > 0 ? _config.DamageInterval : 0.1f);
@@ -38,7 +56,10 @@ namespace SurfaceTension
         public void OnWarheadDetonation()
         {
             Timing.RunCoroutine(DamageOverTime());
-            Log.Info($"Warhead detonated. Surface Tension starting in {_config.DelayTime} seconds!");
+            if (_config.ConsoleLogs == true)
+            {
+                Log.Info($"Warhead detonated. Surface Tension starting in {_config.DelayTime} seconds!");
+            }
         }
 
     }
