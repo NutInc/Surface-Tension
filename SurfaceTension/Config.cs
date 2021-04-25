@@ -19,5 +19,7 @@ namespace SurfaceTension
 
         [Description("True reads the damage amount as a percentage, false as a HP value")]
         public bool DamageAsPercentage { get; private set; } = true;
+        [Description("The hint sent to players when they are damaged")]
+        public string DamageMessage { get; private set; } = "You are being damaged by radiation!";
     }
 }
