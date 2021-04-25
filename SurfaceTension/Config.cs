@@ -29,7 +29,7 @@ namespace SurfaceTension
         public string CassieMessage { get; set; } = "Alpha Warhead Radiation Warning";
 
         [Description("Whether or not to send a broadcast to all players in the server when surface tension starts.")]
-        public bool EnableBroadcast { get; set; } = true;
+        public bool EnableBroadcast { get; set; } = false;
 
         [Description("The message sent in the broadcast to all players")]
         public string BroadcastMessage { get; set; } = "Radiation warning, leave the facility immediately!";
