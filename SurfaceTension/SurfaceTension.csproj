@@ -12,10 +12,10 @@
 
     <ItemGroup>
       <Reference Include="Assembly-CSharp">
-        <HintPath>lib\Assembly-CSharp.dll</HintPath>
+        <HintPath>lib\Assembly-CSharp-Publicized.dll</HintPath>
       </Reference>
       <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>lib\Assembly-CSharp.dll</HintPath>
+        <HintPath>lib\Assembly-CSharp-Publicized.dll</HintPath>
       </Reference>
       <Reference Include="Assembly-CSharp-firstpass">
         <HintPath>lib\Assembly-CSharp-firstpass.dll</HintPath>
